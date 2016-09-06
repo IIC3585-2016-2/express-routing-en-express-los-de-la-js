@@ -1,0 +1,23 @@
+{
+  "name": "express-routing-en-express-los-de-la-js",
+  "version": "1.0.0",
+  "description": "routes in express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIC3585-2016-2/express-routing-en-express-los-de-la-js.git"
+  },
+  "author": "nahif",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IIC3585-2016-2/express-routing-en-express-los-de-la-js/issues"
+  },
+  "homepage": "https://github.com/IIC3585-2016-2/express-routing-en-express-los-de-la-js#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
