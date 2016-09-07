@@ -77,33 +77,33 @@ Se refiere a la forma en que la aplicación responde los request enviador por lo
 ``` javascript
   // doble función anidada
   app.get('/doblefuncion', (req, res, next) => {
-    console.log('función 1')
+    console.log('Verificando usuario...')
     next()
   }, (req, res) => {
-    res.send('funcion 2')
+    res.send('Información requerida por el usuario')
   })
 
   // arreglo de funciones anidadas
-  var a1 = (req, res, next) => {
-    console.log('pasé por a1')
+  var login = (req, res, next) => {
+    console.log('Verificando usuario...')
     next()
   }
 
-  var a2 = (req, res, next) => {
-    console.log('pasé por a2')
+  var validation = (req, res, next) => {
+    console.log('Validando información...')
     next()
   }
 
-  var fin = (req, res, next) => {
-    res.send('pasé por a3')
+  var send = (req, res, next) => {
+    res.send('Información requerida por el usuario')
   }
 
-  app.get('/arreglofuncion', [a1, a2, fin])
+  app.get('/arreglofuncion', [login, validation, send])
 
   // Mixta
 
-  app.get('/mixfuncion', [a1, a2], (req, res) => {
-    res.send('hola función mix')
+  app.get('/mixfuncion', [login, validation], (req, res) => {
+    res.send('Información requerida por el usuario')
   })
 ```
 
@@ -148,5 +148,45 @@ using route in external file
   var dogs = require('./router.js')
   // Se le entrega como handler de la ruta específica
   app.use('/dogs', dogs)
+```
 
+### Params
+
+``` javascript
+  // router.js
+  var express = require('express');
+  var router = express.Router();
+
+  // Se toma el parámetro que ingresa
+  router.param('user_id', function(req, res, next, id) {
+    console.log('buscando usuario de parámetro:',id);
+    console.log('buscando usuario de parámetro:',req.params.user_id)
+    req.user = {
+      name: 'Usuario1',
+      id: id
+    }
+    next();
+  });
+
+  router.get('/:user_id', function (req, res) {
+    res.send('Nombre:' + req.user.name);
+  });
+
+  module.exports = router;
+```
+
+### Headers
+``` javascript
+// Header
+app.get('/header1', (req, res) => {
+  res.append('Content-Type', 'text/plain');
+  res.send('enviado con headers');
+})
+
+app.get('/header2', (req, res) => {
+  res.set({
+    'Content-Type': 'application/json'
+  });
+  res.json('enviado con headers')
+})
 ```
